@@ -20,19 +20,21 @@ app.use(bodyParser.json());
 
 // Used to load environment variables from a .env file into process.env.
 const dotenv = require('dotenv');
+const loggerService = require('./loggerService');
 dotenv.config();
 
 //routes
 app.use('/api/v1.0/questionaire', QuestionnaireRoutes);
 app.use('/api/v1.0/question', QuestionRoutes);
+
 //welcome message
 app.get('/', (req, res) => {
     res.send("Welcome to questionnaire service")
     req.body
 })
-// Used to start the server.
+// Uses to start the server.
 const PORT = process.env.PORT || 9090;
 //opens a port
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    loggerService.info(`Server running on port ${PORT}`);
 });
