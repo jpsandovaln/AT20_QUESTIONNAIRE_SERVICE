@@ -19,7 +19,7 @@ const MongoDb = require('./configs/dbMongo');
 
 const app = express();
 dotenv.config();
-//app.use(cors())
+app.use(cors())
 app.get('/api/v1/', (req, res) => {
     res.send('hello from the home');
 });

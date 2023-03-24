@@ -22,7 +22,8 @@ const interviewSchema = new mongoose.Schema (
             type: String
         },
         guest_global_id: [{
-            type: String
+            value : String,
+            name : String,
         }],
         meeting_name: {
             type: String,
