@@ -34,6 +34,7 @@ app.get('/', (req, res) => {
 })
 // Uses to start the server.
 const PORT = process.env.PORT || 9090;
+
 //opens a port
 app.listen(PORT, () => {
     loggerService.info(`Server running on port ${PORT}`);

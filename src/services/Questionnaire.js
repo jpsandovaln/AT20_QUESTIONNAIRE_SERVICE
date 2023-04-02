@@ -10,90 +10,45 @@
 * with Jalasoft
 */
 
+const MySQLDataBase = require("./DB/mySQLDataBase");
+const dotenv = require('dotenv');
+const loggerService = require("../../loggerService");
+const GetQueriesMysql = require("./DB/queries/getQueriesMysql");
+dotenv.config();
 
 class Quiestionnarie {
-	#idStudent;
-	#questions;
-	constructor(idStudent) {
-		this.#idStudent = idStudent;
-		this.#questions = [  
-			{
-				"id": 0,
-				"question": "Question 0",
-				"test" : "spacial",
-				"imgSrc": "",
-				"type" : "checkBox",
-				"answer": "op2",
-				"options": [
-					{ "value": "op1", "label": "Opción 1" },
-					{ "value": "op2", "label": "Opción 2" },
-					{ "value": "op3", "label": "Opción 3" },
-					{ "value": "op4", "label": "Opción 4" }
-				]
-			},
-			{
-				"id": 1,
-				"question": "Question 1",
-				"test" : "spacial",
-				"imgSrc": "",
-				"type" : "radioButton",
-				"answer": "op1",
-				"options": [
-					{ "value": "op1", "label": "Opción 1" },
-					{ "value": "op2", "label": "Opción 2" },
-					{ "value": "op3", "label": "Opción 3" }
-				]
-			},
-			{
-				"id": 2,
-				"question": "Question 2",
-				"test" : "spacial",
-				"imgSrc": "",
-				"type" : "radioButton",
-				"answer": "op2",
-				"options": [
-					{ "value": "op1", "label": "Opción 1" },
-					{ "value": "op2", "label": "Opción 2" },
-					{ "value": "op3", "label": "Opción 3" }
-				]
-			},
-			{
-				"id": 3,
-				"question": "Question 3",
-				"test" : "spacial",
-				"imgSrc": "",
-				"type" : "radioButton",
-				"answer": "op2",
-				"options": [
-					{ "value": "op1", "label": "Opción 1" },
-					{ "value": "op2", "label": "Opción 2" },
-					{ "value": "op3", "label": "Opción 3" }
-				]
-			},
-			{   
-				"id": 4,
-				"question": "Question 4",
-				"test" : "spacial",
-				"imgSrc": "",
-				"type" : "radioButton",
-				"answer": "op2",
-				"options": [
-					{ "value": "op1", "label": "Opción 1" },
-					{ "value": "op2", "label": "Opción 2" },
-					{ "value": "op3", "label": "Opción 3" }
-				]
-			}
-		]
-	}
+
+	#configbd = {
+		host: process.env.HOST_DATA_BASE,
+		user: 'root',
+		password: process.env.MYSQL_ROOT_PASSWORD,
+		database: process.env.DATABASE_NAME
+	};
+
 	// gets a Questionnaire for a test
-	getQuestionnaire(test) {
-		//should be implemented.
-		return new Promise(resolve => {
-			setTimeout(() => {
-			  resolve(this.#questions);
-			}, 500);
-		});
+	async getQuestionnaire(test) {
+
+		const db = new MySQLDataBase(this.#configbd);
+		const getComand = new GetQueriesMysql();
+		let response = [];
+		db.connect();
+		try {
+			db.connect();
+			const questions = await db.execute(getComand.getQuestionnaire(test));
+			let options;
+			for (let index = 0; index < questions.length; index++) {
+				options = await db.execute(getComand.getOptions(questions[index].IDQuestions));
+				response.push({
+				...questions[index],
+				"options" : options});
+			}
+			return response;
+
+		} catch (error) {
+			loggerService.info(error.message);
+		} finally {
+			db.disconnect();
+		}
 	}
 }
-
 module.exports = Quiestionnarie;

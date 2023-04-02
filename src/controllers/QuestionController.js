@@ -15,22 +15,22 @@ const Question = require('./../services/Question');
 class QuestionController {
 
 	// gets a question by ID from DB
-	getQuestion(req, res) {
+	async getQuestion(req, res) {
 		const idQuestion = req.params.id;
-		const question = new Question().getQuestion(idQuestion);
+		const question = await new Question().getQuestion(idQuestion);
 		res.status(200).json(question);
 	}
 	// sets a question on a DB
-	setQuestion(req, res) {
-		const question = new Question().setQuestion(req.body);
+	async setQuestion(req, res) {
+		const question = await new Question().setQuestion(req.body);
 		res.status(200).json({
 			"message" : "the question was saved",
 			...question});
 	}
 	// removes a question by ID from DB
-	removeQuestion(req, res) {
+	async removeQuestion(req, res) {
 		const idQuestion = req.params.id;
-		const questions = new Question().removeQuestion(idQuestion);
+		const questions = await new Question().removeQuestion(idQuestion);
 		res.status(200).json(questions);
 	}
 }
