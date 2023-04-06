@@ -17,8 +17,13 @@ class QuestionController {
 	// gets a question by ID from DB
 	async getQuestion(req, res) {
 		const idQuestion = req.params.id;
-		const question = await new Question().getQuestion(idQuestion);
-		res.status(200).json(question);
+
+		try {
+			const question = await new Question().getQuestion(idQuestion);
+			res.status(200).json(question);
+		} catch (error) {
+			res.status(200).json({"message":"Get Question Error"});
+		}
 	}
 	// sets a question on a DB
 	async setQuestion(req, res) {

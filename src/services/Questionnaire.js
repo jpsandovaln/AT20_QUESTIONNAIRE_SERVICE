@@ -16,39 +16,46 @@ const loggerService = require("../../loggerService");
 const GetQueriesMysql = require("./DB/queries/getQueriesMysql");
 dotenv.config();
 
-class Quiestionnarie {
+class Questionnaire {
 
 	#configbd = {
 		host: process.env.HOST_DATA_BASE,
-		user: 'root',
+		user: process.env.USER_DATA_BASE,
 		password: process.env.MYSQL_ROOT_PASSWORD,
 		database: process.env.DATABASE_NAME
 	};
 
-	// gets a Questionnaire for a test
+	/**
+	* gets a Questionnaire to db
+	* @param {string} test - it should be the name of the test which you want to get  
+	* @returns {object} - the Questionnaire
+	*/
 	async getQuestionnaire(test) {
 
 		const db = new MySQLDataBase(this.#configbd);
-		const getComand = new GetQueriesMysql();
+		
+		const getCommand = new GetQueriesMysql();
 		let response = [];
 		db.connect();
 		try {
 			db.connect();
-			const questions = await db.execute(getComand.getQuestionnaire(test));
+			const questions = await db.execute(getCommand.getQuestionnaire(test));
 			let options;
 			for (let index = 0; index < questions.length; index++) {
-				options = await db.execute(getComand.getOptions(questions[index].IDQuestions));
+				options = await db.execute(getCommand.getOptions(questions[index].IDQuestions));
 				response.push({
 				...questions[index],
 				"options" : options});
 			}
-			return response;
+			
 
 		} catch (error) {
 			loggerService.info(error.message);
+			throw error
 		} finally {
 			db.disconnect();
+			return response;
 		}
 	}
 }
-module.exports = Quiestionnarie;
+module.exports = Questionnaire;
