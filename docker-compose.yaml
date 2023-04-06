@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  questionaire_service:
+    build: .
+    ports:
+      - '8818:8818'
+    environment:
+      - PORT = 8818
+      - PINO_LOG_LEVEL = info
