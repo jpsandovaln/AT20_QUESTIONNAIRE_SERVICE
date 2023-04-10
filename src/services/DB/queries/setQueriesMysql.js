@@ -11,6 +11,7 @@
 */
 
 const SetQueries = require("./setQueries");
+const QueriesExceptions = require("../../../exceptions/queriesExceptions")
 
 class SetQueriesMysql extends SetQueries{
 
@@ -37,7 +38,8 @@ class SetQueriesMysql extends SetQueries{
 	* @returns {string} - the query to set a question
 	*/
 	setQuestion(question) {
-		const textQuestion = question.question;
+		try {
+			const textQuestion = question.question;
 		const imgQuestion = question.imgSrc || '';
 		const answerQuestion = question.answer || '';
 		const IDTest = this.test[question.test];
@@ -45,6 +47,10 @@ class SetQueriesMysql extends SetQueries{
 
 		return (`INSERT INTO questions (Question, answer, ImgScr, IDTest, IDType)
 		  		 VALUES ('${textQuestion}', '${answerQuestion}', '${imgQuestion}', ${IDTest}, ${IDType});`);
+		} catch (error) {
+			throw new QueriesExceptions(error.message, 500, "set query error")
+		}
+		
 	}
 
 	/**
@@ -66,18 +72,23 @@ class SetQueriesMysql extends SetQueries{
 	* @returns {string} - the query to set a options
 	*/
 	setOptions(question) {
-		let command = 'INSERT INTO options (Label, Value, ImgSrc, IDQuestions)\n';
-		for (let index = 0; index < question.options.length; index++) {
-			let label = question.options[index].label
-			let value = question.options[index].value
-			let imgSrc = question.options[index].imgSrc || ''
-			command += `SELECT '${label}', '${value}', '${imgSrc}', LAST_INSERT_ID()\n`;
-			if (index !== question.options.length - 1) {
-				command += 'UNION ALL\n';
+		try {
+			let command = 'INSERT INTO options (Label, Value, ImgSrc, IDQuestions)\n';
+			for (let index = 0; index < question.options.length; index++) {
+				let label = question.options[index].label
+				let value = question.options[index].value
+				let imgSrc = question.options[index].imgSrc || ''
+				command += `SELECT '${label}', '${value}', '${imgSrc}', LAST_INSERT_ID()\n`;
+				if (index !== question.options.length - 1) {
+					command += 'UNION ALL\n';
+				}
+				
 			}
-			
+			return command + ';';
+		} catch (error) {
+			throw new QueriesExceptions(error.message, 500, "set query error")
 		}
-		return command + ';';
+
   	}
 }
   

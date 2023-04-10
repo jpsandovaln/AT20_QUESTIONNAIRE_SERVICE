@@ -24,7 +24,7 @@ const loggerService = require('./loggerService');
 dotenv.config();
 
 //routes
-app.use('/api/v1.0/questionaire', QuestionnaireRoutes);
+app.use('/api/v1.0/questionnaire', QuestionnaireRoutes);
 app.use('/api/v1.0/question', QuestionRoutes);
 
 //welcome message

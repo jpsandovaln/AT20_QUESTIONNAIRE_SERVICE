@@ -19,11 +19,11 @@ class DataBase {
 		throw new Error("It should be implemented")
 	}
 
-	execute(comand){
+	execute(command){
 		throw new Error("It should be implemented")
 	}
 
-	disconnect(){
+	#disconnect(){
 		throw new Error("It should be implemented")
 	}
 }

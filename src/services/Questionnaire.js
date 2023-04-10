@@ -12,7 +12,6 @@
 
 const MySQLDataBase = require("./DB/mySQLDataBase");
 const dotenv = require('dotenv');
-const loggerService = require("../../loggerService");
 const GetQueriesMysql = require("./DB/queries/getQueriesMysql");
 dotenv.config();
 
@@ -37,25 +36,16 @@ class Questionnaire {
 		const getCommand = new GetQueriesMysql();
 		let response = [];
 		db.connect();
-		try {
-			db.connect();
-			const questions = await db.execute(getCommand.getQuestionnaire(test));
-			let options;
-			for (let index = 0; index < questions.length; index++) {
-				options = await db.execute(getCommand.getOptions(questions[index].IDQuestions));
-				response.push({
-				...questions[index],
-				"options" : options});
-			}
-			
-
-		} catch (error) {
-			loggerService.info(error.message);
-			throw error
-		} finally {
-			db.disconnect();
-			return response;
+		db.connect();
+		const questions = await db.execute(getCommand.getQuestionnaire(test));
+		let options;
+		for (let index = 0; index < questions.length; index++) {
+			options = await db.execute(getCommand.getOptions(questions[index].IDQuestions));
+			response.push({
+			...questions[index],
+			"options" : options});
 		}
+		return response;
 	}
 }
 module.exports = Questionnaire;

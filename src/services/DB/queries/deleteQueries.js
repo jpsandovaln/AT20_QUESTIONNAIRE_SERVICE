@@ -28,6 +28,10 @@ class DeleteQueries {
 	deleteQuestion(idQuestion){
 		throw new error("It should be implemented")
 	}
+
+	deleteOptions(idQuestion){
+		throw new error("It should be implemented")
+	}
 }
 
 module.exports = DeleteQueries;

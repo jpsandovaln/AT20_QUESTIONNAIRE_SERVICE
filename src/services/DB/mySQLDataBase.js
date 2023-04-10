@@ -12,6 +12,8 @@
 
 const DataBase = require('./dataBase');
 const mysql = require('mysql');
+const MysqlExceptions = require('../../exceptions/mysqlExceptions');
+
 
 class MySQLDataBase extends DataBase {
     /**
@@ -28,22 +30,29 @@ class MySQLDataBase extends DataBase {
     }
     // connects to DB
     connect() {
-        this.connection = mysql.createConnection(this.config);
+        try {
+            this.connection = mysql.createConnection(this.config);
+        } catch (error) {
+            throw new MysqlExceptions(error.message, 500, "data base connect error")
+        }
+
     }
     // executes a query
     execute(command) {
         return new Promise((resolve, reject) => {
         this.connection.query(command, (error, results, field) => {
             if (error) {
-                reject(error);
+                this.#disconnect();
+                throw new MysqlExceptions(error.message, 500, "data base connect error")
             } else {
+                this.#disconnect();
                 resolve(results);
             }
             });
         });
     }
     // disconnects to DB
-    disconnect() {
+    #disconnect() {
         if (this.connection) {
         this.connection.end();
         this.connection = null;

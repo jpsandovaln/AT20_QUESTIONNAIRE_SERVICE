@@ -10,7 +10,8 @@
 * with Jalasoft
 */
 
-const DeleteQueries = require("./deleteQuerie");
+const DeleteQueries = require("./deleteQueries");
+const QueriesExceptions = require("../../../exceptions/queriesExceptions")
 class DeleteQueriesMysql extends DeleteQueries{
 
 	constructor() {
@@ -22,7 +23,12 @@ class DeleteQueriesMysql extends DeleteQueries{
 	* @returns {string} - the query to delete a question
 	*/
 	deleteQuestion(idQuestion) {
-	  	return `DELETE FROM questions WHERE IDQuestions = ${idQuestion};`;
+		try {
+			return `DELETE FROM questions WHERE IDQuestions = ${idQuestion};`;
+		} catch (error) {
+			throw new QueriesExceptions(error.message, 500, "delete query error")
+		}
+	  	
 	}
 
 	/**
@@ -31,8 +37,13 @@ class DeleteQueriesMysql extends DeleteQueries{
 	* @returns {string} - the query to delete a option
 	*/
 
-	deleteOptions(idOption) {
-		return `DELETE FROM options WHERE IDQuestions = ${idOption};`;
+	deleteOptions(idQuestion) {
+		try {
+			return `DELETE FROM options WHERE IDQuestions = ${idQuestion};`;
+		} catch (error) {
+			throw new QueriesExceptions(error.message, 500, "delete query error")
+		}
+		
   }
 
 }

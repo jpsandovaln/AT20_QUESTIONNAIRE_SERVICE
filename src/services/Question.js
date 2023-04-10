@@ -12,7 +12,6 @@
 
 const MySQLDataBase = require("./DB/mySQLDataBase");
 const dotenv = require('dotenv');
-const loggerService = require("../../loggerService");
 const GetQueriesMysql = require("./DB/queries/getQueriesMysql");
 const SetQueriesMysql = require("./DB/queries/setQueriesMysql");
 const DeleteQueriesMysql = require("./DB/queries/deleteQueriesMysql");
@@ -49,17 +48,10 @@ class Questions {
 	setQuestion(question){
 		const db = new MySQLDataBase(this.#configbd);
 		const setCommand = new SetQueriesMysql();
-		try {
-			db.connect();
-			db.execute(setCommand.setQuestion(question));
-			db.execute(setCommand.setOptions(question));
-		} catch (error) {
-			loggerService.info(error.message);
-			throw error
-		} finally {
-			db.disconnect();
-			return question
-		}
+		db.connect();
+		db.execute(setCommand.setQuestion(question));
+		db.execute(setCommand.setOptions(question));
+		return question
 	}
 	/**
 	* gets a question with its options to DB
@@ -70,23 +62,17 @@ class Questions {
 		const db = new MySQLDataBase(this.#configbd);
 		const getCommand = new GetQueriesMysql();
 		let res;
-		try {
-			db.connect();
-			const question = await db.execute(getCommand.getQuestion(idQuestion));
-			const options = await db.execute(getCommand.getOptions(idQuestion));
-			if(Object.keys(question).length > 0){
-				res = {...question[0],
-					"options" : options,
-				};
-			}else{
-				res = {"message" : "Question was not found"};
-			}
-		} catch (error) {
-			loggerService.info(error.message);
-		} finally {
-			db.disconnect();
-			return res
+		db.connect();
+		const question = await db.execute(getCommand.getQuestion(idQuestion));
+		const options = await db.execute(getCommand.getOptions(idQuestion));
+		if(Object.keys(question).length > 0){
+			res = {...question[0],
+				"options" : options,
+			};
+		}else{
+			res = {"message" : "Question was not found"};
 		}
+		return res
 	}
 	/**
 	* deletes a question with its options to DB
@@ -96,17 +82,10 @@ class Questions {
 	async removeQuestion(idQuestion){
 		const db = new MySQLDataBase(this.#configbd);
 		const deleteCommand = new DeleteQueriesMysql();
-
-		try {
-			db.connect();
-			await db.execute(deleteCommand.deleteOptions(idQuestion));
-			await db.execute(deleteCommand.deleteQuestion(idQuestion));
-		} catch (error) {
-			loggerService.info(error.message);
-		} finally {
-			db.disconnect();
-			return {"Message" : "Question was deleted"}
-		}
+		db.connect();
+		await db.execute(deleteCommand.deleteOptions(idQuestion));
+		await db.execute(deleteCommand.deleteQuestion(idQuestion));
+		return {"Message" : "Question was deleted"}
 	}
 }
 

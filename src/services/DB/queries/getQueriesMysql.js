@@ -11,6 +11,7 @@
 */
 
 const GetQueries = require("./getQueries");
+const QueriesExceptions = require("../../../exceptions/queriesExceptions")
 class GetQueriesMysql extends GetQueries{
 
 	constructor() {
