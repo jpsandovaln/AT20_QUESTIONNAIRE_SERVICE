@@ -10,8 +10,8 @@
 * with Jalasoft
 */
 
-const QuestionnaireRoutes = require('./src/routes/QuestionnaireRoutes')
-const QuestionRoutes = require('./src/routes/QuestionRoutes')
+const QuestionnaireRoutes = require('./src/routes/questionnaireRoutes')
+const QuestionRoutes = require('./src/routes/questionRoutes')
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

@@ -10,8 +10,8 @@
 * with Jalasoft
 */
 
-const Question = require('./../services/Question');
-const loggerService = require('./loggerService');
+const Question = require('../services/question');
+const loggerService = require('../../loggerService');
 class QuestionController {
 
 	// gets a question by ID from DB
@@ -23,8 +23,9 @@ class QuestionController {
 			res.status(200).json(question);
 		} catch (error) {
 			loggerService.info(error.message)
+			loggerService.info(error)
 			res.status(error.errorCode).json({
-				error : error.type
+				"error" : error.type
 			});
 		}
 	}

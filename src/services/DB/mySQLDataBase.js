@@ -38,21 +38,23 @@ class MySQLDataBase extends DataBase {
 
     }
     // executes a query
-    execute(command) {
-        return new Promise((resolve, reject) => {
-        this.connection.query(command, (error, results, field) => {
-            if (error) {
-                this.#disconnect();
-                throw new MysqlExceptions(error.message, 500, "data base connect error")
-            } else {
-                this.#disconnect();
-                resolve(results);
-            }
+    execute(query) {
+        const res = new Promise((resolve) => {
+          this.connection.query(query, (error, results) => {
+                if (error) {
+                    this.disconnect();
+                    throw new MysqlExceptions(error.message, 500, "data base query error");
+                } else {
+                    resolve(results);
+                }
             });
         });
+        return res;
     }
+    
+      
     // disconnects to DB
-    #disconnect() {
+    disconnect() {
         if (this.connection) {
         this.connection.end();
         this.connection = null;

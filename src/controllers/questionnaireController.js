@@ -10,7 +10,8 @@
 * with Jalasoft
 */
 
-const Questionnaire = require("../services/Questionnaire")
+const Questionnaire = require("../services/questionnaire")
+const loggerService = require('../../loggerService');
 
 class QuestionnaireController {
     // gets a Questionnaire for a test

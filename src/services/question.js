@@ -45,12 +45,13 @@ class Questions {
 	* @returns {object} - similar to question
 	*/
 
-	setQuestion(question){
+	async setQuestion(question){
 		const db = new MySQLDataBase(this.#configbd);
 		const setCommand = new SetQueriesMysql();
-		db.connect();
-		db.execute(setCommand.setQuestion(question));
-		db.execute(setCommand.setOptions(question));
+		db.connect()
+		await db.execute(setCommand.setQuestion(question));
+		await db.execute(setCommand.setOptions(question));
+		db.disconnect()
 		return question
 	}
 	/**
@@ -62,7 +63,7 @@ class Questions {
 		const db = new MySQLDataBase(this.#configbd);
 		const getCommand = new GetQueriesMysql();
 		let res;
-		db.connect();
+		db.connect()
 		const question = await db.execute(getCommand.getQuestion(idQuestion));
 		const options = await db.execute(getCommand.getOptions(idQuestion));
 		if(Object.keys(question).length > 0){
@@ -72,6 +73,7 @@ class Questions {
 		}else{
 			res = {"message" : "Question was not found"};
 		}
+		db.disconnect()
 		return res
 	}
 	/**
@@ -82,9 +84,10 @@ class Questions {
 	async removeQuestion(idQuestion){
 		const db = new MySQLDataBase(this.#configbd);
 		const deleteCommand = new DeleteQueriesMysql();
-		db.connect();
+		db.connect()
 		await db.execute(deleteCommand.deleteOptions(idQuestion));
 		await db.execute(deleteCommand.deleteQuestion(idQuestion));
+		db.disconnect()
 		return {"Message" : "Question was deleted"}
 	}
 }

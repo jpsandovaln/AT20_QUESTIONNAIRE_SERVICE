@@ -40,12 +40,12 @@ class SetQueriesMysql extends SetQueries{
 	setQuestion(question) {
 		try {
 			const textQuestion = question.question;
-		const imgQuestion = question.imgSrc || '';
-		const answerQuestion = question.answer || '';
-		const IDTest = this.test[question.test];
-		const IDType = this.type[question.type];
+			const imgQuestion = question.imgSrc || '';
+			const answerQuestion = question.answer || '';
+			const IDTest = this.test[question.test];
+			const IDType = this.type[question.type];
 
-		return (`INSERT INTO questions (Question, answer, ImgScr, IDTest, IDType)
+			return (`INSERT INTO questions (Question, answer, ImgScr, IDTest, IDType)
 		  		 VALUES ('${textQuestion}', '${answerQuestion}', '${imgQuestion}', ${IDTest}, ${IDType});`);
 		} catch (error) {
 			throw new QueriesExceptions(error.message, 500, "set query error")

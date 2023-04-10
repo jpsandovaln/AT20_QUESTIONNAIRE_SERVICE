@@ -32,11 +32,9 @@ class Questionnaire {
 	async getQuestionnaire(test) {
 
 		const db = new MySQLDataBase(this.#configbd);
-		
 		const getCommand = new GetQueriesMysql();
+		db.connect()
 		let response = [];
-		db.connect();
-		db.connect();
 		const questions = await db.execute(getCommand.getQuestionnaire(test));
 		let options;
 		for (let index = 0; index < questions.length; index++) {
@@ -45,6 +43,7 @@ class Questionnaire {
 			...questions[index],
 			"options" : options});
 		}
+		db.disconnect()
 		return response;
 	}
 }
