@@ -1,16 +1,17 @@
 class MysqlExceptions extends Error {
-    constructor(message, errorCode, type) {
+    constructor (message, errorCode, type) {
         super(message);
         this.errorCode = errorCode;
         this.type = type;
     }
-    get getErrorCode() {
+
+    get getErrorCode () {
         return this.errorCode;
     }
-    get getType() {
+
+    get getType () {
         return this.type;
-	}
-    
+    }
 }
 
 module.exports = MysqlExceptions;

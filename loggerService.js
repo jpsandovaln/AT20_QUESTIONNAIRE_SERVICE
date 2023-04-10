@@ -29,7 +29,7 @@ module.exports = pino({
                 level: 'trace',
                 options: {
                     colorize: true,
-                    translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
+                    translateTime: 'SYS:dd-mm-yyyy HH:MM:ss'
                 }
             },
             {
@@ -38,9 +38,9 @@ module.exports = pino({
                 options: {
                     // destination: './logs/main.log',
                     destination: `./logs/${filenamelog}`,
-                    mkdir: true,
+                    mkdir: true
                 }
             }
         ]
-    },
+    }
 });

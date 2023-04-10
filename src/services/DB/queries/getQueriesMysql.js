@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-constructor */
+/* eslint-disable no-tabs */
 /*
 * Copyright(c) 2023 Jalasoft
 * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,56 +12,52 @@
 * with Jalasoft
 */
 
-const GetQueries = require("./getQueries");
-const QueriesExceptions = require("../../../exceptions/queriesExceptions")
-class GetQueriesMysql extends GetQueries{
+const GetQueries = require('./getQueries');
+const QueriesExceptions = require('../../../exceptions/queriesExceptions');
+class GetQueriesMysql extends GetQueries {
+    constructor () {
+        super();
+    }
 
-	constructor() {
-		super();
-	}
-
-	/**
+    /**
 	* Returns a query to get a question
-	* @param {string} idQuestion - it should be the ID of the question which you want to get  
+	* @param {string} idQuestion - it should be the ID of the question which you want to get
 	* @returns {string} - the query to get a question
 	*/
-	getQuestion(idQuestion) {
-		try {
-			return `SELECT * FROM questions WHERE IDQuestions = ${idQuestion};`;
-		} catch (error) {
-			throw new QueriesExceptions(error.message, 500, "get query error");
-		}
-	  	
-	}
+    getQuestion (idQuestion) {
+        try {
+            return `SELECT * FROM questions WHERE IDQuestions = ${idQuestion};`;
+        } catch (error) {
+            throw new QueriesExceptions(error.message, 500, 'get query error');
+        }
+    }
 
-	/**
+    /**
 	* Returns a query to get a option
 	* @param {string} idQuestion - it should be the ID question for a options group
 	* @returns {string} - the query to get a option
 	*/
-	getOptions(idQuestion) {
-		try {
-			return `SELECT * FROM options WHERE IDQuestions = ${idQuestion};`;
-		} catch (error) {
-			throw new QueriesExceptions(error.message, 500, "get query error");
-		}
-  	}
-	
-	/**
+    getOptions (idQuestion) {
+        try {
+            return `SELECT * FROM options WHERE IDQuestions = ${idQuestion};`;
+        } catch (error) {
+            throw new QueriesExceptions(error.message, 500, 'get query error');
+        }
+    }
+
+    /**
 	* Returns a query to get a Questionnaire
-	* @param {string} test - it should be the name of the test which you want to get  
+	* @param {string} test - it should be the name of the test which you want to get
 	* @returns {string} - the query to get a Questionnaire
 	*/
-	getQuestionnaire(test) {
-		try {
-			const IDTest = this.test[test];
-			return (`select * from questions where IDTest = ${IDTest};`);
-		} catch (error) {
-			throw new QueriesExceptions(error.message, 500, "get query error");
-		}
-		
-		
-  	}
+    getQuestionnaire (test) {
+        try {
+            const IDTest = this.test[test];
+            return (`select * from questions where IDTest = ${IDTest};`);
+        } catch (error) {
+            throw new QueriesExceptions(error.message, 500, 'get query error');
+        }
+    }
 }
-  
+
 module.exports = GetQueriesMysql;

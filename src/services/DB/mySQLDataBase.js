@@ -1,3 +1,5 @@
+/* eslint-disable no-tabs */
+/* eslint-disable no-useless-constructor */
 /*
 * Copyright(c) 2023 Jalasoft
 * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -14,10 +16,9 @@ const DataBase = require('./dataBase');
 const mysql = require('mysql');
 const MysqlExceptions = require('../../exceptions/mysqlExceptions');
 
-
 class MySQLDataBase extends DataBase {
     /**
-    *@param {object} config - It should have the following properties: 
+    *@param {object} config - It should have the following properties:
     *                        {
     *    		                 host: HOST_DATA_BASE,
 	*	                         user: USER_DATA_BASE,
@@ -25,25 +26,26 @@ class MySQLDataBase extends DataBase {
     *                            database: DATABASE_NAME
     *                        }
     */
-    constructor(config) {
+    constructor (config) {
         super(config);
     }
+
     // connects to DB
-    connect() {
+    connect () {
         try {
             this.connection = mysql.createConnection(this.config);
         } catch (error) {
-            throw new MysqlExceptions(error.message, 500, "data base connect error")
+            throw new MysqlExceptions(error.message, 500, 'data base connect error');
         }
-
     }
+
     // executes a query
-    execute(query) {
+    execute (query) {
         const res = new Promise((resolve) => {
-          this.connection.query(query, (error, results) => {
+            this.connection.query(query, (error, results) => {
                 if (error) {
                     this.disconnect();
-                    throw new MysqlExceptions(error.message, 500, "data base query error");
+                    throw new MysqlExceptions(error.message, 500, 'data base query error');
                 } else {
                     resolve(results);
                 }
@@ -51,13 +53,12 @@ class MySQLDataBase extends DataBase {
         });
         return res;
     }
-    
-      
+
     // disconnects to DB
-    disconnect() {
+    disconnect () {
         if (this.connection) {
-        this.connection.end();
-        this.connection = null;
+            this.connection.end();
+            this.connection = null;
         }
     }
 }
