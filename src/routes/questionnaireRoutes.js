@@ -10,23 +10,13 @@
 * with Jalasoft
 */
 
+const express = require('express');
+const QuestionnaireController = require('../controllers/questionnaireController');
+const router = express.Router();
 
-class Questions {
-	// sets a question on a DB
-	setQuestion(question){
-		//should be implemented.
-		return question;
-	}
-	//gets a question by ID
-	getQuestion(idQuestion){
-		//should be implemented.
-	 	return idQuestion;
-	}
-	//deletes a question by ID
-	removeQuestion(idQuestion){
-		//should be implemented.
-		return idQuestion
-	}
-}
+const questionnaireController = new QuestionnaireController();
 
-module.exports = Questions;
+// defines a route for questionnaireController
+router.get('/', questionnaireController.getQuestionnaire);
+
+module.exports = router;

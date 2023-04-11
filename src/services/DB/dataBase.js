@@ -9,16 +9,23 @@
 * accordance with the terms of the license agreement you entered into
 * with Jalasoft
 */
+class DataBase {
+    constructor (config) {
+        this.config = config;
+        this.connection = null;
+    }
 
-const express = require('express');
-const QuestionsController = require('./../controllers/QuestionController')
-const router = express.Router();
+    connect () {
+        throw new Error('It should be implemented');
+    }
 
-const questionsController = new QuestionsController();
+    execute (command) {
+        throw new Error('It should be implemented');
+    }
 
-// defines routes for questionsController
-router.get('/:id', questionsController.getQuestion);
-router.post('/', questionsController.setQuestion);
-router.delete('/:id', questionsController.removeQuestion);
+    #disconnect () {
+        throw new Error('It should be implemented');
+    }
+}
 
-module.exports = router;
+module.exports = DataBase;

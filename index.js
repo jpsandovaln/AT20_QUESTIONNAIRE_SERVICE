@@ -10,8 +10,8 @@
 * with Jalasoft
 */
 
-const QuestionnaireRoutes = require('./src/routes/QuestionnaireRoutes')
-const QuestionRoutes = require('./src/routes/QuestionRoutes')
+const QuestionnaireRoutes = require('./src/routes/questionnaireRoutes');
+const QuestionRoutes = require('./src/routes/questionRoutes');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -23,18 +23,14 @@ const dotenv = require('dotenv');
 const loggerService = require('./loggerService');
 dotenv.config();
 
-//routes
-app.use('/api/v1.0/questionaire', QuestionnaireRoutes);
+// routes
+app.use('/api/v1.0/questionnaire', QuestionnaireRoutes);
 app.use('/api/v1.0/question', QuestionRoutes);
 
-//welcome message
-app.get('/', (req, res) => {
-    res.send("Welcome to questionnaire service")
-    req.body
-})
 // Uses to start the server.
 const PORT = process.env.PORT || 9090;
-//opens a port
+
+// opens a port
 app.listen(PORT, () => {
     loggerService.info(`Server running on port ${PORT}`);
 });

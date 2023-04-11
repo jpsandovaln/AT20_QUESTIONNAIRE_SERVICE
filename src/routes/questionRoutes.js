@@ -11,12 +11,14 @@
 */
 
 const express = require('express');
-const QuestionnaireController = require('./../controllers/QuestionnaireController');
+const QuestionsController = require('../controllers/questionController');
 const router = express.Router();
 
-const questionnaireController = new QuestionnaireController();
+const questionsController = new QuestionsController();
 
-// defines a route for questionnaireController
-router.get('/', questionnaireController.getQuestionnaire);
+// defines routes for questionsController
+router.get('/:id', questionsController.getQuestion);
+router.post('/', questionsController.setQuestion);
+router.delete('/:id', questionsController.removeQuestion);
 
 module.exports = router;
