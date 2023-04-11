@@ -26,7 +26,7 @@ class GetQueriesMysql extends GetQueries {
 	*/
     getQuestion (idQuestion) {
         try {
-            return `SELECT * FROM questions WHERE IDQuestions = ${idQuestion};`;
+            return `SELECT Question, ImgScr, IDTest, IDType, answer FROM questions WHERE IDQuestions = ${idQuestion};`;
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
@@ -39,7 +39,7 @@ class GetQueriesMysql extends GetQueries {
 	*/
     getOptions (idQuestion) {
         try {
-            return `SELECT * FROM options WHERE IDQuestions = ${idQuestion};`;
+            return `SELECT Label, Value, ImgSrc FROM options WHERE IDQuestions = ${idQuestion};`;
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
@@ -53,7 +53,7 @@ class GetQueriesMysql extends GetQueries {
     getQuestionnaire (test) {
         try {
             const IDTest = this.test[test];
-            return (`select * from questions where IDTest = ${IDTest};`);
+            return (`select IDQuestions, Question, ImgScr, IDTest, IDType, answer from questions where IDTest = ${IDTest};`);
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
