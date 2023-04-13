@@ -15,14 +15,14 @@ const QuestionRoutes = require('./src/routes/questionRoutes');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-
+const cors = require("cors");
 app.use(bodyParser.json());
 
 // Used to load environment variables from a .env file into process.env.
 const dotenv = require('dotenv');
 const loggerService = require('./loggerService');
 dotenv.config();
-
+app.use(cors());
 // routes
 app.use('/api/v1.0/questionnaire', QuestionnaireRoutes);
 app.use('/api/v1.0/question', QuestionRoutes);
