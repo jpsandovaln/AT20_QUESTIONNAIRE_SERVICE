@@ -13,6 +13,7 @@
 const QuestionnaireRoutes = require('./src/routes/questionnaireRoutes');
 const QuestionRoutes = require('./src/routes/questionRoutes');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 const dotenv = require('dotenv');
 const loggerService = require('./loggerService');
 dotenv.config();
-
+app.use(cors());
 // routes
 app.use('/api/v1.0/questionnaire', QuestionnaireRoutes);
 app.use('/api/v1.0/question', QuestionRoutes);
