@@ -26,7 +26,12 @@ class GetQueriesMysql extends GetQueries {
 	*/
     getQuestion (idQuestion) {
         try {
-            return `SELECT Question, ImgScr, IDTest, IDType, answer FROM questions WHERE IDQuestions = ${idQuestion};`;
+
+            return`SELECT questions.Question, questions.ImgScr, test.nombre AS Test, type.nombre AS Type, questions.Answer 
+            FROM questions 
+            INNER JOIN test ON questions.IDTest = test.IDTest 
+            INNER JOIN type ON questions.IDType = type.IDType 
+            WHERE questions.IDQuestions = ${idQuestion};`;
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
@@ -53,7 +58,11 @@ class GetQueriesMysql extends GetQueries {
     getQuestionnaire (test) {
         try {
             const IDTest = this.test[test];
-            return (`select IDQuestions, Question, ImgScr, IDTest, IDType, answer from questions where IDTest = ${IDTest};`);
+            return (`SELECT questions.IDQuestions, questions.Question, questions.ImgScr, test.nombre AS Test, type.nombre AS Type, questions.Answer 
+                FROM questions 
+                INNER JOIN test ON questions.IDTest = test.IDTest 
+                INNER JOIN type ON questions.IDType = type.IDType 
+                WHERE questions.IDTest = 1;`);
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
