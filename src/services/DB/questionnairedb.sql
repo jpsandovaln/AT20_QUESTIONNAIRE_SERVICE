@@ -1,4 +1,4 @@
-ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'mi_contrasea';
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'at20123';
 flush privileges;
 
 CREATE DATABASE questionnairedb;
