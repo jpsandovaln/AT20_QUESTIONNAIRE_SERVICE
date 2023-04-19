@@ -41,6 +41,7 @@ class MySQLDataBase extends DataBase {
 
     // executes a query
     execute (query) {
+        console.log(query);
         const res = new Promise((resolve) => {
             this.connection.query(query, (error, results) => {
                 if (error) {

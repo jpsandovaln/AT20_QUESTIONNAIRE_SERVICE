@@ -5,10 +5,11 @@
 
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --fix",
-    "build": "nodemon src/index.js"
+    "build": "nodemon src/index.js",
+    "dev":"nodemon index.js"
 
   },
   "repository": {

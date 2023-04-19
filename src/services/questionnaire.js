@@ -20,7 +20,8 @@ class Questionnaire {
         host: process.env.HOST_DATA_BASE,
         user: process.env.USER_DATA_BASE,
         password: process.env.MYSQL_ROOT_PASSWORD,
-        database: process.env.DATABASE_NAME
+        database: process.env.DATABASE_NAME,
+        port: process.env.DB_PORT
     };
 
     /**
