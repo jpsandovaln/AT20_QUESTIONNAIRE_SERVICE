@@ -13,7 +13,7 @@
 */
 
 const DataBase = require('./dataBase');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const MysqlExceptions = require('../../exceptions/mysqlExceptions');
 
 class MySQLDataBase extends DataBase {

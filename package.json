@@ -2,7 +2,6 @@
   "name": "at20_questionnaire_service",
   "version": "1.0.0",
   "description": "",
-
   "main": "src/index.js",
   "scripts": {
     "start": "node index.js",
@@ -10,7 +9,6 @@
     "lint:fix": "eslint . --fix",
     "build": "nodemon src/index.js",
     "dev":"nodemon index.js"
-
   },
   "repository": {
     "type": "git",
@@ -26,8 +24,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "mongoose": "^7.0.1",
     "mysql": "^2.18.1",
-    "mongoose": "^7.0.1"
+    "mysql2": "^3.2.3"
   },
   "devDependencies": {
     "eslint": "^8.38.0",
