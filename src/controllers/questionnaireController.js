@@ -16,7 +16,8 @@ const loggerService = require('../../loggerService');
 class QuestionnaireController {
     // gets a Questionnaire for a test
     async getQuestionnaire (req, res) {
-        const test = req.body.test;
+        const test = req.params.test;
+        console.log(req.params.test)
         try {
             const questionnaire = await new Questionnaire().getQuestionnaire(test);
             res.status(200).json(questionnaire);

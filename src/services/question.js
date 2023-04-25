@@ -31,7 +31,7 @@ class Questions {
 * @param {object} question - it should have the following properties:
 *			{
 *			"question": "what is .....",
-*			"test" : "logical",
+*			"test" : "  ",
 *			"imgSrc": "",
 *			"type" : "radiobutton",
 *			"answer": "op2",
@@ -48,6 +48,8 @@ class Questions {
     async setQuestion (question) {
         const db = new MySQLDataBase(this.#configbd);
         const setCommand = new SetQueriesMysql();
+        console.log(setCommand.setQuestion(question))
+        console.log(setCommand.setOptions(question))
         db.connect();
         await db.execute(setCommand.setQuestion(question));
         await db.execute(setCommand.setOptions(question));
@@ -61,12 +63,14 @@ class Questions {
 	* @returns {Object} - similar to question
 	*/
     async getQuestion (idQuestion) {
+
         const db = new MySQLDataBase(this.#configbd);
         const getCommand = new GetQueriesMysql();
         let res;
         db.connect();
         const question = await db.execute(getCommand.getQuestion(idQuestion));
         const options = await db.execute(getCommand.getOptions(idQuestion));
+
         if (Object.keys(question).length > 0) {
             res = {
                 ...question[0],

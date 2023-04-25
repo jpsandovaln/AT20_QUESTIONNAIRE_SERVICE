@@ -31,7 +31,9 @@ class QuestionController {
 
     // sets a question on a DB
     async setQuestion (req, res) {
+        console.log(req.body)
         try {
+
             const question = await new Question().setQuestion(req.body);
             res.status(200).json({
                 message: 'the question was saved',

@@ -17,6 +17,6 @@ const router = express.Router();
 const questionnaireController = new QuestionnaireController();
 
 // defines a route for questionnaireController
-router.get('/', questionnaireController.getQuestionnaire);
+router.get('/:test', questionnaireController.getQuestionnaire);
 
 module.exports = router;
