@@ -62,7 +62,7 @@ class GetQueriesMysql extends GetQueries {
                 FROM questions 
                 INNER JOIN test ON questions.IDTest = test.IDTest 
                 INNER JOIN type ON questions.IDType = type.IDType 
-                WHERE questions.IDTest = 1;`);
+                WHERE questions.IDTest = ${IDTest};`);
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }

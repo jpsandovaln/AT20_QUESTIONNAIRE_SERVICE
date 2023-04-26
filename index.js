@@ -16,7 +16,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser');
-const cors = require('cors');
 app.use(bodyParser.json());
 
 // Used to load environment variables from a .env file into process.env.

@@ -36,7 +36,7 @@ services:
       PINO_LOG_LEVEL: "info"
       MYSQL_ROOT_PASSWORD: "at20123"
       DATABASE_NAME: "questionnairedb"
-      HOST_DATA_BASE: "at20_questionnaire_service-Db-1"
+      HOST_DATA_BASE: "Db"
       USER_DATA_BASE: "root"
       DB_PORT: "3306"
     networks:
