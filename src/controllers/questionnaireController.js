@@ -17,6 +17,7 @@ class QuestionnaireController {
     // gets a Questionnaire for a test
     async getQuestionnaire (req, res) {
         const test = req.params.test;
+        console.log(test);
         try {
             const questionnaire = await new Questionnaire().getQuestionnaire(test);
             res.status(200).json(questionnaire);

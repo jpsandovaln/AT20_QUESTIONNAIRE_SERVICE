@@ -27,11 +27,10 @@ class GetQueriesMysql extends GetQueries {
     getQuestion (idQuestion) {
         try {
 
-            return`SELECT questions.Question, questions.ImgScr, test.nombre AS Test, type.nombre AS Type, questions.Answer 
-            FROM questions 
-            INNER JOIN test ON questions.IDTest = test.IDTest 
-            INNER JOIN type ON questions.IDType = type.IDType 
-            WHERE questions.IDQuestions = ${idQuestion};`;
+            return `SELECT Question, ImgScr, test.nombre as test, type.nombre as type, answer FROM questions
+            INNER JOIN test ON questions.IDTest = test.IDTest
+            INNER JOIN type ON questions.IDType = type.IDType
+            WHERE IDQuestions = ${idQuestion};`;
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
@@ -58,11 +57,11 @@ class GetQueriesMysql extends GetQueries {
     getQuestionnaire (test) {
         try {
             const IDTest = this.test[test];
-            return (`SELECT questions.IDQuestions, questions.Question, questions.ImgScr, test.nombre AS Test, type.nombre AS Type, questions.Answer 
-                FROM questions 
-                INNER JOIN test ON questions.IDTest = test.IDTest 
-                INNER JOIN type ON questions.IDType = type.IDType 
-                WHERE questions.IDTest = ${IDTest};`);
+            return (` SELECT questions.IDQuestions as IDQuestions, questions.Question, questions.ImgScr, test.nombre AS test, type.nombre as type, questions.Answer
+            from questions
+           INNER JOIN test ON questions.IDTest = test.IDTest
+           INNER JOIN type ON questions.IDType = type.IDType
+           WHERE questions.IDTest = ${IDTest};`);
         } catch (error) {
             throw new QueriesExceptions(error.message, 500, 'get query error');
         }
