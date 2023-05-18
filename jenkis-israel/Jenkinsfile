@@ -11,6 +11,7 @@ pipeline{
         stage('unitest stage'){
             steps{
                 sh 'echo test unitest comand'
+                sh 'mkdir'
             }
         }
     }
