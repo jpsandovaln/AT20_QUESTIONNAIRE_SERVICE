@@ -5,7 +5,7 @@ pipeline {
       steps {
         sh 'echo Hello World'
         sh 'echo Hello class'
-        sh 'it works!'
+        sh 'echo it works!'
       }
     }
   }
