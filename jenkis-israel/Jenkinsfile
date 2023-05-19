@@ -1,0 +1,18 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('init configurations'){
+            steps{
+                sh 'echo hello world'
+                sh 'echo hello class'
+            }
+        }
+        stage('unitest stage'){
+            steps{
+                sh 'echo test unitest comand'
+                sh 'mkdir'
+            }
+        }
+    }
+}
