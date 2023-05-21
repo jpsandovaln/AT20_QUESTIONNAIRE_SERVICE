@@ -4,10 +4,9 @@ pipeline{
     stages{
         stage('test'){
             agent{docker 'node:18-alpine3.16'}
-            step{
+            steps{
                 sh 'node version'
             }
         }
-
     }
 }
