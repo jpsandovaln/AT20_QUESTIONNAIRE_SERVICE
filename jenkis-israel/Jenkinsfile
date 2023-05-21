@@ -2,17 +2,12 @@ pipeline{
     agent any
 
     stages{
-        stage('init configurations'){
-            steps{
-                sh 'echo hello world'
-                sh 'echo hello class'
+        stage('test'){
+            agent{docker 'node:18-alpine3.16'}
+            step{
+                sh 'node version'
             }
         }
-        stage('unitest stage'){
-            steps{
-                sh 'echo test unitest comand'
-                sh 'mkdir'
-            }
-        }
+
     }
 }
