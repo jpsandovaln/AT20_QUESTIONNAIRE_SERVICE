@@ -5,7 +5,8 @@ pipeline{
         stage('test'){
             agent{docker 'node:18-alpine3.16'}
             steps{
-                sh 'node version'
+                sh 'npm version'
+                sh 'ls -la'
             }
         }
     }
