@@ -11,6 +11,13 @@
     "dev": "nodemon index.js",
     "test": "jest"
   },
+
+  "jest": {
+    "reporters": [
+      "jest-html-reporters"
+    ]
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jpsandovaln/AT20_QUESTIONNAIRE_SERVICE.git"
@@ -36,6 +43,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
+    "jest-html-reporters": "^3.1.4",
     "nodemon": "^2.0.21",
     "pino": "^8.11.0",
     "pino-pretty": "^10.0.0"
