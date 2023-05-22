@@ -17,14 +17,14 @@
       [
         "jest-junit",
         {
-          "outputDirectory": "./test-results",
+          "outputDirectory": "./tests/test-results",
           "outputName": "report.xml"
         }
       ],
       [
         "jest-html-reporters",
         {
-          "publicPath": "./test-results",
+          "publicPath": "./tests/test-results",
           "filename": "report.html"
         }
       ]

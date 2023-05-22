@@ -10,7 +10,7 @@ pipeline{
             }
             post{
                 always{
-                    archiveArtifacts artifacts: 'test-results/report.xml', followSymlinks: false
+                    archiveArtifacts artifacts: 'tests/test-results/report.xml', followSymlinks: false
                 }
             }
         }
