@@ -2,5 +2,4 @@
 /logs
 src/services/DB/logs
 src/services/logs
-/jest-html-reporters-attach
-jest_html_reporters.html
+/test-results
