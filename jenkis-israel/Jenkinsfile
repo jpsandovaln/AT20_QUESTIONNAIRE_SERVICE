@@ -25,8 +25,8 @@ pipeline{
         stage('Publish'){
             steps{
                 sh 'docker login -u dkmar11 -p ${DOCKER_PASS}'
-                sh 'docker tag at20_questionnaire_service israel/questionnaire'
-                sh 'docker push israel/questionnaire'
+                sh 'docker tag at20_questionnaire_service dkmar11/questionnaire'
+                sh 'docker push dkmar11/questionnaire'
             }
         }
     }
