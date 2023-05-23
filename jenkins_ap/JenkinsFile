@@ -13,5 +13,17 @@ pipeline {
           }
         }
     }
+    stage('Package'){
+      steps{
+        sh 'docker build -t questionnaire-service ../.'
+      }
+    }
+    stage('Publish'){
+      //steps{
+        //docker login 
+        //sh 'echo  docker tag nombreservicio mas el mio'
+        //sh 'echo docker push nombreservicio'
+      //}
+    }
   }
 }
