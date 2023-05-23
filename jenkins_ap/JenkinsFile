@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    DOCKER_PASS = credentials('docker_pass')
+  }
   stages {
     stage('Test') {
       agent { docker 'node:18-alpine3.16' }
@@ -20,9 +23,9 @@ pipeline {
     }
     stage('Publish'){
       steps {
-        //sh 'docker login -u crgv -p ${DOCKER_PASS}'
-        sh 'echo docker tag questionnaire-service adalid21/questionnaire-service'
-        sh 'echo docker push adalid21/questionnaire-service'
+        sh 'docker login -u adalid21 -p ${DOCKER_PASS}'
+        sh 'docker tag questionnaire-service adalid21/questionnaire-service'
+        sh 'docker push adalid21/questionnaire-service'
       }
     }
   }
