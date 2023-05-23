@@ -19,11 +19,11 @@ pipeline {
       }
     }
     stage('Publish'){
-      //steps{
-        //docker login 
-        //sh 'echo  docker tag nombreservicio mas el mio'
-        //sh 'echo docker push nombreservicio'
-      //}
+      steps {
+        //sh 'docker login -u crgv -p ${DOCKER_PASS}'
+        sh 'echo docker tag questionnaire-service adalid21/questionnaire-service'
+        sh 'echo docker push adalid21/questionnaire-service'
+      }
     }
   }
 }
