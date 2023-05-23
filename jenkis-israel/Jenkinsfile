@@ -18,7 +18,7 @@ pipeline{
         }
         stage('Package'){
             steps{
-                sh 'docker build -t AT20_QUESTIONNAIRE_SERVICE .'
+                sh 'docker build -t at20_questionnaire_service .'
             }
         }
 
