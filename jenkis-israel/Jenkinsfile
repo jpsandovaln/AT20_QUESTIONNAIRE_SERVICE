@@ -8,6 +8,11 @@ pipeline{
                 sh 'npm install'
                 sh 'npm test'
             }
+            post{
+                always{
+                    archiveArtifacts artifacts: 'tests/test-results/report.xml', followSymlinks: false
+                }
+            }
         }
     }
 }
