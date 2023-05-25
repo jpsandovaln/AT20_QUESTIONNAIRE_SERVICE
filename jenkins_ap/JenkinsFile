@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     DOCKER_PASS = credentials('docker_pass')
+    SONAR_TOKEN = credentials('sonar_token')
   }
   stages {
     stage('Test') {
@@ -15,6 +16,15 @@ pipeline {
             archiveArtifacts artifacts: 'tests/test-results/', followSymlinks: false 
           }
         }
+    }
+    stage('Code Inspection'){
+      step{
+        sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+          -Dsonar.organization=at-20-questionnaire-ap \
+          -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=https://sonarcloud.io'
+      }
     }
     stage('Package'){
       steps{
