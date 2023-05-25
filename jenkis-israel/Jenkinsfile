@@ -1,4 +1,4 @@
-pipeline{
+pipeline {
     agent any
     environment{
         DOCKER_PASS = credentials('docker_password')
@@ -28,6 +28,7 @@ pipeline{
                         -Dsonar.sources=. \
                         -Dsonar.host.url=https://sonarcloud.io'
             }
+        }
 
         stage("Quality Gate"){
             def qg = waitForQualityGate()
