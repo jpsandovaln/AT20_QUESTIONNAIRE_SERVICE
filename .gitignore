@@ -3,3 +3,4 @@
 src/services/DB/logs
 src/services/logs
 tests/test-results
+.scannerwork/
