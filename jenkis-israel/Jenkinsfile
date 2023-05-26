@@ -47,15 +47,15 @@ pipeline {
 
         stage('Package'){
             steps{
-                sh 'echo docker build -t at20_questionnaire_service .'
+                sh 'docker build -t at20_questionnaire_service .'
             }
         }
 
         stage('Publish'){
             steps{
-                sh 'echo docker login -u dkmar11 -p ${DOCKER_PASS}'
-                sh 'echo docker tag at20_questionnaire_service dkmar11/questionnaire'
-                sh 'echo docker push dkmar11/questionnaire'
+                sh 'docker login -u dkmar11 -p ${DOCKER_PASS}'
+                sh 'docker tag at20_questionnaire_service dkmar11/questionnaire'
+                sh 'docker push dkmar11/questionnaire'
             }
         }
     }
