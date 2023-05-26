@@ -22,18 +22,20 @@ pipeline {
 
         stage('CodeInspection'){
             steps {
-                sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                withSonarQubeEnv('sonar_scanner'){
+                        sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
                         -Dsonar.organization=${ORG_KEY} \
                         -Dsonar.projectKey=${PROJECT_KEY} \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=https://sonarcloud.io'
+                }
             }
         }
 
-        stage("Quality Gate") {
+        stage('Quality Gate') {
             steps {
-                script {
-                    timeout(time: 1, unit: 'HOURS') {
+                timeout(time: 1, unit: 'HOURS') {
+                    script {
                         def qg = waitForQualityGate()
                         if (qg.status != 'OK') {
                             error "Pipeline aborted due to quality gate failure: ${qg.status}"
@@ -42,9 +44,6 @@ pipeline {
                 }
             }
         }
-
-
-
 
         stage('Package'){
             steps{
