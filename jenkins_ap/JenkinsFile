@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     DOCKER_PASS = credentials('docker_pass')
+    SONAR_TOKEN = credentials('sonar_token')
   }
   stages {
     stage('Test') {
@@ -15,6 +16,29 @@ pipeline {
             archiveArtifacts artifacts: 'tests/test-results/', followSymlinks: false 
           }
         }
+    }
+    stage('Code Inspection'){
+      steps{
+        withSonarQubeEnv('sonar_scanner'){
+          sh '/var/jenkins_home/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+            -Dsonar.organization=at-20-questionnaire-ap \
+            -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io'
+        }
+      }
+    }
+    stage('Quality Gate') {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          script {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+              error "Pipeline aborted due to quality gate failure: ${qg.status}"
+            }
+          }
+        }
+      }
     }
     stage('Package'){
       steps{
