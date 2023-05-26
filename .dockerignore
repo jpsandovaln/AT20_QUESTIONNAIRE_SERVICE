@@ -3,4 +3,5 @@ logs
 src/services/DB/logs
 src/services/logs
 /test-results
+.scannerwork/
 .env
