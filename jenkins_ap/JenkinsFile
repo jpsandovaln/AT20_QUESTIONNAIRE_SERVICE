@@ -52,5 +52,17 @@ pipeline {
         sh 'docker push adalid21/questionnaire-service'
       }
     }
+    stage('DeployToDev'){
+      steps{
+        sh 'docker compose -f docker-compose-ap.yaml up -d'
+        sh 'echo command to run smoke test'
+      }
+    }
+  }
+  post{
+      always {
+        sh 'docker image prune -a -y'
+        sh 'docker system prune -a'
+      }
   }
 }

@@ -87,6 +87,8 @@ $ git clone https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
 $ cd AT20_QUESTIONNAIRE_SERVICE
 $ docker compose up -d
 ```
+### Start the service using docker compose locally
+$ docker compose -f docker-compose.dev.yaml -d
 
 
 ## Collaboration
