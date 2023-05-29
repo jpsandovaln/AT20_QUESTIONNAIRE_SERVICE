@@ -54,15 +54,15 @@ pipeline {
     }
     stage('DeployToDev'){
       steps{
-        sh 'docker-compose -f docker-compose-ap.yaml up -d'
+        sh 'docker compose -f docker-compose-ap.yaml up -d'
         sh 'echo command to run smoke test'
       }
     }
   }
   post{
       always {
-        sh 'docker rmi $(docker images -f "dangling=true" -q)'
-        sh 'docker system prune -a'
+        sh 'echo docker rmi $(docker images -f "dangling=true" -q)'
+        sh 'echo docker system prune -a'
       }
   }
 }
