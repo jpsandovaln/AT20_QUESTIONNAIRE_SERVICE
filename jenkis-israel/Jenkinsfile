@@ -59,10 +59,18 @@ pipeline {
                 sh 'docker push dkmar11/questionnaire'
             }
             
-            post{
-                always{
-                    sh 'docker image prune -a'
-                }
+        }
+
+        stage('DeployToDev'){
+            steps{
+                sh 'docker compose -f docker-compose-israel.yaml up -d'
+            }
+        }
+
+        post{
+            always{
+                sh 'echo docker image prune -a'
+                sh 'echo docker system prune -a'
             }
         }
 

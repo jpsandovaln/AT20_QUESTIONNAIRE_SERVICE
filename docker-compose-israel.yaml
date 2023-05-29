@@ -5,9 +5,6 @@ networks:
 services:
   Db:
     image: mysql:latest
-    build: 
-      context: .
-      dockerfile: ./src/services/DB/Dockerfile
     ports: 
       - "33060:3306"
     expose: 
@@ -40,5 +37,3 @@ services:
       DB_PORT: "3306"
     networks:
       - app-tier 
-
-      
