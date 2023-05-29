@@ -7,6 +7,9 @@ networks:
 services:
   Db:
     image: mysql:latest
+
+    depends_on:
+      - questionnaire
     ports: 
       - "33060:3306"
     expose: 
@@ -23,12 +26,11 @@ services:
 
   questionnaire:
     image: dkmar11/questionnaire
-    depends_on:
-      - Db
     ports:
       - "8821:8820"
     expose: 
       - "8820"
+    restart: always 
     environment:
       PORT: "8820"
       PINO_LOG_LEVEL: "info"
