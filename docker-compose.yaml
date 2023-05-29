@@ -23,7 +23,8 @@ services:
       - app-tier 
 
   questionnaire:
-    image: dkmar11/questionnaire
+    image: questionnaire_service
+    build: .
     depends_on:
       - Db
     ports:
