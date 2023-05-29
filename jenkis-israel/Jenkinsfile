@@ -69,8 +69,8 @@ pipeline {
     }
     post{
         always{
-            sh 'echo docker image prune -a'
-            sh 'echo docker system prune -a'
+            sh 'docker image prune -a'
+            sh 'docker system prune -a'
         }
     }
 }
