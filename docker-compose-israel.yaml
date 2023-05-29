@@ -1,7 +1,9 @@
 version: '3.3'
+
 networks:
   app-tier:
     driver: bridge
+
 services:
   Db:
     image: mysql:latest
@@ -26,7 +28,7 @@ services:
     ports:
       - "8821:8820"
     expose: 
-      - "8821"
+      - "8820"
     environment:
       PORT: "8820"
       PINO_LOG_LEVEL: "info"
@@ -36,4 +38,5 @@ services:
       USER_DATA_BASE: "root"
       DB_PORT: "3306"
     networks:
-      - app-tier 
+      - app-tier
+
