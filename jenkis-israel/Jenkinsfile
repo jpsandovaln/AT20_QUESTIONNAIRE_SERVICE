@@ -59,5 +59,11 @@ pipeline {
                 sh 'docker push dkmar11/questionnaire'
             }
         }
+
+        post{
+            always{
+                sh 'docker image prune -a'
+            }
+        }
     }
 }
