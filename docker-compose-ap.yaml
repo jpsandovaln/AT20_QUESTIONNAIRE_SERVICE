@@ -1,13 +1,10 @@
 version: '3.3'
-
 networks:
   app-tier:
     driver: bridge
-
 services:
   Db:
     image: mysql:latest
-
     depends_on:
       - questionnaire
     ports: 
