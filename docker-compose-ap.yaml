@@ -1,10 +1,15 @@
 version: '3.3'
+
 networks:
   app-tier:
     driver: bridge
+
 services:
   Db:
     image: mysql:latest
+
+    depends_on:
+      - questionnaire
     ports: 
       - "33060:3306"
     expose: 
@@ -21,12 +26,11 @@ services:
 
   questionnaire:
     image: adalid21/questionnaire-service
-    depends_on:
-      - Db
     ports:
       - "8821:8820"
     expose: 
-      - "8821"
+      - "8820"
+    restart: always 
     environment:
       PORT: "8820"
       PINO_LOG_LEVEL: "info"
@@ -36,6 +40,5 @@ services:
       USER_DATA_BASE: "root"
       DB_PORT: "3306"
     networks:
-      - app-tier 
+      - app-tier
 
-      
