@@ -5,6 +5,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_token')
         ORG_KEY = 'devops-questionary'
         PROJECT_KEY = 'devops-questionary_devops'
+        TARGET_HOST = '192.168.56.61'
     }
     stages{
         stage('test'){
@@ -63,7 +64,8 @@ pipeline {
 
         stage('DeployToDev'){
             steps{
-                sh 'docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'scp docker-compose-israel.yaml $TARGET_HOST:docker-compose.yml'
+                sh 'ssh $TARGET_HOST docker-compose up -d'
             }
         }
     }
