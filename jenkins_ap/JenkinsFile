@@ -3,6 +3,7 @@ pipeline {
   environment {
     DOCKER_PASS = credentials('docker_pass')
     SONAR_TOKEN = credentials('sonar_token')
+    TARGET_HOST = '192.168.56.61'
   }
   stages {
     stage('Test') {
@@ -55,6 +56,12 @@ pipeline {
     stage('DeployToDev'){
       steps{
         sh 'docker-compose -f docker-compose-ap.yaml up -d'
+      }
+    }
+    stage('DeployToAuto'){
+      steps {
+        sh 'scp docker-compose-ap.yaml $TARGET_HOST:docker-compose.yml'
+        sh 'ssh $TARGET_HOST docker-compose up -d'
       }
     }
   }
