@@ -60,8 +60,7 @@ pipeline {
     }
     stage('DeployToAuto'){
       steps {
-        sh 'scp docker-compose-ap.yaml $TARGET_HOST:docker-compose.yml'
-        sh 'ssh $TARGET_HOST docker-compose up -d'
+        sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-ap.yaml up -d'
       }
     }
   }
