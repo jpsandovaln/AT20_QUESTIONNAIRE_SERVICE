@@ -61,17 +61,24 @@ pipeline {
             }
             
         }
-
         stage('DeployToDev'){
+            steps{
+                sh 'docker-compose -f docker-compose-ap.yaml up -d'
+            }
+        }
+
+        stage('DeployToAuto'){
             steps{
                 sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
             }
         }
-    }
+
     post{
         always{
             sh 'docker image prune -a -f'
             sh 'docker system prune -a -f'
         }
+    }
+    
     }
 }
