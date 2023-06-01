@@ -63,7 +63,7 @@ pipeline {
         }
         stage('DeployToDev'){
             steps{
-                sh 'docker-compose -f docker-compose-ap.yaml up -d'
+                sh 'docker-compose -f docker-compose-israel.yaml up -d'
             }
         }
 
@@ -79,6 +79,6 @@ pipeline {
             sh 'docker system prune -a -f'
         }
     }
-    
+
     }
 }
