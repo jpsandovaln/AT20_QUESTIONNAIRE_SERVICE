@@ -5,6 +5,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_token')
         ORG_KEY = 'devops-questionary'
         PROJECT_KEY = 'devops-questionary_devops'
+        TARGET_HOST = '192.168.56.61'
     }
     stages{
         stage('test'){
@@ -58,6 +59,26 @@ pipeline {
                 sh 'docker tag at20_questionnaire_service dkmar11/questionnaire'
                 sh 'docker push dkmar11/questionnaire'
             }
+            
         }
+        stage('DeployToDev'){
+            steps{
+                sh 'docker-compose -f docker-compose-israel.yaml up -d'
+            }
+        }
+
+        stage('DeployToAuto'){
+            steps{
+                sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
+            }
+        }
+
+    post{
+        always{
+            sh 'docker image prune -a -f'
+            sh 'docker system prune -a -f'
+        }
+    }
+
     }
 }
