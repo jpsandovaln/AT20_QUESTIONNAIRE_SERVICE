@@ -64,8 +64,7 @@ pipeline {
 
         stage('DeployToDev'){
             steps{
-                sh 'scp docker-compose-israel.yaml $TARGET_HOST:docker-compose.yml'
-                sh 'ssh $TARGET_HOST docker-compose up -d'
+                sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
             }
         }
     }
