@@ -44,7 +44,7 @@ pipeline {
     }
     stage('Package'){
       steps{
-        sh 'echo docker build -t questionnaire-service .'
+        sh 'docker build -t questionnaire-service .'
       }
     }
     stage('Publish'){
@@ -56,14 +56,13 @@ pipeline {
     }
     stage('DeployToDev'){
       steps{
-        //sh 'docker-compose -f docker-compose-ap.yaml up -d'
         sh 'export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-ap.yaml up -d'
         sh 'echo command to run smoke test'
       }
     }
     stage('DeployToAuto'){
       steps {
-        sh 'echo DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-ap.yaml up -d'
+        sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-ap.yaml up -d'
         sh 'echo command to run automation tests'
       }
     }
