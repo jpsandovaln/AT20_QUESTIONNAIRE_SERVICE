@@ -6,6 +6,7 @@ pipeline {
         ORG_KEY = 'devops-questionary'
         PROJECT_KEY = 'devops-questionary_devops'
         TARGET_HOST = '192.168.56.61'
+        TAG_VERSION = sh (script: "git rev-parse --short HEAD", returnStdout: true)
     }
     stages{
         stage('test'){
@@ -56,20 +57,22 @@ pipeline {
         stage('Publish'){
             steps{
                 sh 'docker login -u dkmar11 -p ${DOCKER_PASS}'
-                sh 'docker tag at20_questionnaire_service dkmar11/questionnaire'
-                sh 'docker push dkmar11/questionnaire'
+                sh 'docker tag at20_questionnaire_service dkmar11/questionnaire:${TAG_VERSION}'
+                sh 'docker push dkmar11/questionnaire:${TAG_VERSION}'
             }
             
         }
         stage('DeployToDev'){
             steps{
                 sh 'docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'echo command to run smoke test'
             }
         }
 
         stage('DeployToAuto'){
             steps{
                 sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'echo command to run automation test'
             }
         }
 
