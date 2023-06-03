@@ -75,6 +75,7 @@ pipeline {
                 sh 'echo command to run automation test'
             }
         }
+    }
 
     post{
         always{
@@ -83,5 +84,4 @@ pipeline {
         }
     }
 
-    }
 }
