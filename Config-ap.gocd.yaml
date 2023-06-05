@@ -61,3 +61,4 @@ pipelines:
                 - sonar-scanner command here
                 command: echo
                 run_if: passed
+                
