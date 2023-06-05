@@ -25,7 +25,7 @@ services:
       - app-tier 
 
   questionnaire:
-    image: dkmar11/questionnaire
+    image: dkmar11/questionnaire:${TAG_VERSION}
     ports:
       - "8821:8820"
     expose: 

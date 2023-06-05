@@ -1,0 +1,70 @@
+format_version: 10
+pipelines:
+  CI-QUESTIONNAIRE:
+    group: AT20-israel
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-1def632:
+        git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
+        shallow_clone: false
+        auto_update: true
+        branch: task-9-israel
+    stages:
+    - test:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          unitest:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - hello world
+                command: echo
+                run_if: passed
+          Sonar_scan:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - sonar scan command here
+                command: echo
+                run_if: passed
+    - Quality_Gate:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          Wait_Quality_Gate:
+            timeout: 15
+            tasks:
+            - exec:
+                arguments:
+                - waiting sonar scan
+                command: echo
+                run_if: passed
+    - Package:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          docker_build:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - docker build -t at20_questionnaire_service .
+                command: echo
+                run_if: passed
