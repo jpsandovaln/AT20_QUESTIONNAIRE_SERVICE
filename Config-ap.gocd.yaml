@@ -11,7 +11,7 @@ pipelines:
         username: Adalid-Perez
         shallow_clone: false
         auto_update: true
-        branch: task10_AP
+        branch: task-10_AP
         encrypted_password: AES:yv+jiQLZTyJ6AhZPplc+yQ==:YC20C5bVY0+kDA00tjIeDA==
     stages:
     - Test:
@@ -61,4 +61,3 @@ pipelines:
                 - sonar-scanner command here
                 command: echo
                 run_if: passed
-                
