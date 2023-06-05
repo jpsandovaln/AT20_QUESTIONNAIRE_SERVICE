@@ -35,7 +35,7 @@ pipelines:
                 source: tests/test-results/*.xml
                 destination: xml_report
             - build:
-                source: tests/test-results/index.html
+                source: tests/test-results/*.html
                 destination: html_report
           code-coverage:
             timeout: 0
