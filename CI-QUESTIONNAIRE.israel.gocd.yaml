@@ -24,16 +24,16 @@ pipelines:
             timeout: 0
             resource: ubuntu
             tasks:
-            - exec:
-                arguments:
-                - install
-                command: npm
-                run_if: passed
-            - exec:
-                arguments:
-                - test
-                command: npm
-                run_if: passed
+            - script: |
+                npm install
+                npm test
+            artifacts:
+            - test:
+                source: tests/test-results/*.xml
+                destination: xml_report
+            - build:
+                source: tests/test-results/
+                destination: html_report
     - Quality_Gate:
         fetch_materials: true
         keep_artifacts: false
