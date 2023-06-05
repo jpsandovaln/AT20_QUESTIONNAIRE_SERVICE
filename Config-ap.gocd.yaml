@@ -24,13 +24,19 @@ pipelines:
         jobs:
           unit-test:
             timeout: 0
+            resources:
+            - ubuntu
             tasks:
-            - exec:
-                arguments:
-                - Hello
-                - Adalid
-                command: echo
-                run_if: passed
+            - script: |
+                npm install
+                npm test
+            artifacts:
+            - test:
+                source: tests/test-results/*.xml
+                destination: xml_report
+            - build:
+                source: tests/test-results/index.html
+                destination: html_report
           code-coverage:
             timeout: 0
             tasks:
