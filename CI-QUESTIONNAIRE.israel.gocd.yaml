@@ -10,7 +10,7 @@ pipelines:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         shallow_clone: false
         auto_update: true
-        branch: task-9-israel
+        branch: task-10-israel
     stages:
     - test:
         fetch_materials: true
@@ -22,8 +22,8 @@ pipelines:
         jobs:
           unitest:
             timeout: 0
-            tasks:
             resource: ubuntu
+            tasks:
             - exec:
                 arguments:
                 - install
