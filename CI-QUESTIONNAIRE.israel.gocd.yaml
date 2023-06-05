@@ -23,18 +23,16 @@ pipelines:
           unitest:
             timeout: 0
             tasks:
+            resource: ubuntu
             - exec:
                 arguments:
-                - hello world
-                command: echo
+                - install
+                command: npm
                 run_if: passed
-          Sonar_scan:
-            timeout: 0
-            tasks:
             - exec:
                 arguments:
-                - sonar scan command here
-                command: echo
+                - test
+                command: npm
                 run_if: passed
     - Quality_Gate:
         fetch_materials: true
