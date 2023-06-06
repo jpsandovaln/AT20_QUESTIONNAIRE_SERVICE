@@ -10,7 +10,7 @@ pipelines:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         shallow_clone: false
         auto_update: true
-        branch: task-9-israel
+        branch: task-10-israel
     stages:
     - test:
         fetch_materials: true
@@ -22,20 +22,18 @@ pipelines:
         jobs:
           unitest:
             timeout: 0
+            resource: ubuntu
             tasks:
-            - exec:
-                arguments:
-                - hello world
-                command: echo
-                run_if: passed
-          Sonar_scan:
-            timeout: 0
-            tasks:
-            - exec:
-                arguments:
-                - sonar scan command here
-                command: echo
-                run_if: passed
+            - script: |
+                npm install
+                npm test
+            artifacts:
+            - test:
+                source: tests/test-results/*.xml
+                destination: xml_report
+            - build:
+                source: tests/test-results/
+                destination: html_report
     - Quality_Gate:
         fetch_materials: true
         keep_artifacts: false
