@@ -25,7 +25,7 @@ pipelines:
           unitest:
             timeout: 0
             resource: 
-              - ubuntu
+              - node
             tasks:
             - script: |
                 npm install
@@ -48,7 +48,7 @@ pipelines:
           Sonar_scaner:
             timeout: 15
             resource: 
-            - ubuntu
+            - node
             tasks:
             - exec:
                 arguments:
