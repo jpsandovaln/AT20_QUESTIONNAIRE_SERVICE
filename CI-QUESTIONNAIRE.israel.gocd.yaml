@@ -5,12 +5,16 @@ pipelines:
     label_template: ${COUNT}
     lock_behavior: none
     display_order: -1
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
+    secure_variables:
+      SONAR_TOKEN: here your hash
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         shallow_clone: false
         auto_update: true
-        branch: task-10-israel
+        branch: task-11-israel
     stages:
     - test:
         fetch_materials: true
@@ -22,7 +26,8 @@ pipelines:
         jobs:
           unitest:
             timeout: 0
-            resource: ubuntu
+            resource: 
+              - ubuntu
             tasks:
             - script: |
                 npm install
@@ -34,16 +39,18 @@ pipelines:
             - build:
                 source: tests/test-results/
                 destination: html_report
-    - Quality_Gate:
-        fetch_materials: true
+    - Code_inspection:
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
           type: success
           allow_only_on_success: false
         jobs:
-          Wait_Quality_Gate:
+          Sonar_scaner:
             timeout: 15
+            resource: 
+            - ubuntu
             tasks:
             - exec:
                 arguments:
