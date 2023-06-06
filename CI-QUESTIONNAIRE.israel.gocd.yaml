@@ -50,11 +50,14 @@ pipelines:
             resource: 
             - node
             tasks:
-            - exec:
-                arguments:
-                - waiting sonar scan
-                command: echo
+            - fetch:
+                is_file: false
+                source: ./
+                stage: test
+                job: unitest
                 run_if: passed
+            - script: |
+                ls -la
     - Package:
         fetch_materials: true
         keep_artifacts: false
