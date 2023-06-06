@@ -7,6 +7,11 @@ pipelines:
     display_order: -1
     environment_variables:
       GIT_COMMIT_HASH: 1.2
+      ORG_KEY: devops-questionary
+      PROJECT_KEY: devops-questionary_devops
+    secure_variables:
+      SONAR_TOKEN: AES:AjaHZiQZfyh+dmhb0gjLdw==:LaiKZv0CfnJOs2kUjmAS0pLDCs37+WHrVHshLhwaYdokGufj09trnXPcu2Kf+xpy
+      DOCKER_PASS: AES:iCyoVdO8W++ukqr0ubxDag==:bIiVhVz8G2rYwLSA1KAoSQ==
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
@@ -57,7 +62,11 @@ pipelines:
                 job: unitest
                 run_if: passed
             - script: |
-                ls -la
+                /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                      -Dsonar.organization=${ORG_KEY} \
+                      -Dsonar.projectKey=${PROJECT_KEY} \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=https://sonarcloud.io
     - Package:
         fetch_materials: true
         keep_artifacts: false
