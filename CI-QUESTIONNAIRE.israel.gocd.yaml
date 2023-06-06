@@ -11,8 +11,8 @@ pipelines:
       PROJECT_KEY: devops-questionary_devops
       USER_DOCKER: dkmar11
     secure_variables:
-      SONAR_TOKEN: AES:AjaHZiQZfyh+dmhb0gjLdw==:LaiKZv0CfnJOs2kUjmAS0pLDCs37+WHrVHshLhwaYdokGufj09trnXPcu2Kf+xpy
-      DOCKER_PASS: AES:iCyoVdO8W++ukqr0ubxDag==:bIiVhVz8G2rYwLSA1KAoSQ==
+      SONAR_TOKEN: AES:q0vjqL0CjnZTwA7uY4sJtQ==:989O+PBKDQUZ69uwIbEr061xqmbIR64UXnClnEfy4+x2nCjlzVVaYOuWXXzDgtQa
+      DOCKER_PASS: AES:ARQcZ/mzAeIMAjMoUn6EMw==:zQzPJ7eUkCGkQZFqb06R1A==
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
