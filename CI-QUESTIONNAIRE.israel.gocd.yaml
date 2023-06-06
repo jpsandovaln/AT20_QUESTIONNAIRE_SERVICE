@@ -7,8 +7,6 @@ pipelines:
     display_order: -1
     environment_variables:
       GIT_COMMIT_HASH: 1.2
-    secure_variables:
-      SONAR_TOKEN: here your hash
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
