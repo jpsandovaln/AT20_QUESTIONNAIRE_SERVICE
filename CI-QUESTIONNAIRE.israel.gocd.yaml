@@ -25,7 +25,7 @@ pipelines:
           unitest:
             timeout: 0
             resource: 
-              - node
+            - node
             tasks:
             - script: |
                 npm install
@@ -68,6 +68,8 @@ pipelines:
         jobs:
           docker_build:
             timeout: 0
+            resources:
+            - docker
             tasks:
             - exec:
                 arguments:
