@@ -9,6 +9,7 @@ pipelines:
       TAG_VERSION: 1.2
       ORG_KEY: devops-questionary
       PROJECT_KEY: devops-questionary_devops
+      USER_DOCKER: dkmar11
     secure_variables:
       SONAR_TOKEN: AES:AjaHZiQZfyh+dmhb0gjLdw==:LaiKZv0CfnJOs2kUjmAS0pLDCs37+WHrVHshLhwaYdokGufj09trnXPcu2Kf+xpy
       DOCKER_PASS: AES:iCyoVdO8W++ukqr0ubxDag==:bIiVhVz8G2rYwLSA1KAoSQ==
@@ -68,7 +69,7 @@ pipelines:
                       -Dsonar.sources=. \
                       -Dsonar.host.url=https://sonarcloud.io
     - PackageAndPublish:
-        fetch_materials: true
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
@@ -79,15 +80,15 @@ pipelines:
             timeout: 0
             resources:
             - gocd_agent_docker
+            tasks:
             - fetch:
                 is_file: false
                 source: ./
                 stage: test
                 job: unitest
                 run_if: passed
-            tasks:
             - script: |
                 docker build -t at20_questionnaire_service .
-                docker login -u dkmar11 -p ${DOCKER_PASS}
-                docker tag at20_questionnaire_service dkmar11/questionnaire:${TAG_VERSION}
-                docker push dkmar11/questionnaire:${TAG_VERSION}'
+                docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
+                docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
+                docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}'
