@@ -5,13 +5,17 @@ pipelines:
     label_template: ${COUNT}
     lock_behavior: none
     display_order: -1
+    enviroment_variables:
+      GIT_COMMIT_HASH: 1.2
+    secure_variables:
+      SONAR_TOKEN: AES:5vWMmQjrNzqUtmOM+x+deg==:2XH1ws/PIdchiO9mvHco5Qi2nr9TR0Ac82LsC32f21WmeIFDmO05INhbcLeSL9jI
     materials:
       git-9713ea4:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         username: Adalid-Perez
         shallow_clone: false
         auto_update: true
-        branch: task-10_AP
+        branch: task-11_AP
         encrypted_password: AES:yv+jiQLZTyJ6AhZPplc+yQ==:YC20C5bVY0+kDA00tjIeDA==
     stages:
     - Test:
@@ -55,9 +59,12 @@ pipelines:
         jobs:
           sonar:
             timeout: 0
+            resources:
+            - ubuntu
             tasks:
-            - exec:
-                arguments:
-                - sonar-scanner command here
-                command: echo
-                run_if: passed
+            - script: |
+            /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+            -Dsonar.organization=at-20-questionnaire-ap \
+            -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io'
