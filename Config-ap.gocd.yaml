@@ -81,5 +81,5 @@ pipelines:
             - script: |
                 docker build -t questionnaire-service .
                 docker login -u adalid21 -p ${DOCKER_PASS}
-                echo docker tag questionnaire-service adalid21/questionnaire-service:${GIT_COMMIT_HASH}
+                docker tag questionnaire-service adalid21/questionnaire-service:${GIT_COMMIT_HASH}
                 echo docker push adalid21/questionnaire-service:${GIT_COMMIT_HASH}
