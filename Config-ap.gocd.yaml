@@ -6,10 +6,7 @@ pipelines:
     lock_behavior: none
     display_order: -1
     enviroment_variables:
-      GIT_COMMIT_HASH:
-      - script: |
-            (git rev-parse --short HEAD, returnStdout: true).trim()
-
+      GIT_COMMIT_HASH: 1.2
     secure_variables:
       SONAR_TOKEN: AES:5vWMmQjrNzqUtmOM+x+deg==:2XH1ws/PIdchiO9mvHco5Qi2nr9TR0Ac82LsC32f21WmeIFDmO05INhbcLeSL9jI
       DOCKER_PASS: AES:pfSxOi3e/hottCY9PinHXg==:0gxybNbupNnQegSQseplWA==
@@ -84,5 +81,5 @@ pipelines:
             - script: |
                 docker build -t questionnaire-service .
                 docker login -u adalid21 -p ${DOCKER_PASS}
-                docker tag questionnaire-service adalid21/questionnaire-service:${GIT_COMMIT_HASH}
+                docker tag questionnaire-service  adalid21/questionnaire-service:${GIT_COMMIT_HASH}
                 docker push adalid21/questionnaire-service:${GIT_COMMIT_HASH}
