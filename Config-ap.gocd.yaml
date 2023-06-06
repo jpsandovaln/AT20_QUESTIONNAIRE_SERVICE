@@ -63,4 +63,4 @@ pipelines:
             - ubuntu
             tasks:
             - script: |
-              /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner  -Dsonar.organization=at-20-questionnaire-ap  -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE  -Dsonar.sources=.  -Dsonar.host.url=https://sonarcloud.io
+                /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner  -Dsonar.organization=at-20-questionnaire-ap  -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE  -Dsonar.sources=.  -Dsonar.host.url=https://sonarcloud.io
