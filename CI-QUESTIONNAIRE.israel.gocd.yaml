@@ -88,6 +88,7 @@ pipelines:
                 job: unitest
                 run_if: passed
             - script: |
+                ls -la
                 docker build -t at20_questionnaire_service .
                 docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
                 docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
