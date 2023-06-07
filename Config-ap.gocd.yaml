@@ -89,8 +89,8 @@ pipelines:
             - script: |
                 docker build -t questionnaire-service .
                 docker login -u adalid21 -p ${DOCKER_PASS}
-                docker tag questionnaire-service adalid21/questionnaire_service:${GIT_COMMIT_HASH}
-                docker push adalid21/questionnaire_service:${GIT_COMMIT_HASH}
+                docker tag questionnaire-service adalid21/questionnaire-service:${GIT_COMMIT_HASH}
+                docker push adalid21/questionnaire-service:${GIT_COMMIT_HASH}
             artifacts:
             - build:
                 source: docker-compose-ap.yaml
