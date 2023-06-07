@@ -5,9 +5,8 @@ pipelines:
     label_template: ${COUNT}
     lock_behavior: none
     display_order: -1
-    enviroment_variables:
-      #GIT_COMMIT_HASH: 1.2
-      GIT_COMMIT_HASH:  1.2
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
       #GIT_COMMIT_HASH:
         #value: (git rev-parse --short HEAD).trim()
     secure_variables:
@@ -76,7 +75,7 @@ pipelines:
           type: success
           allow_only_on_success: false
         jobs:
-          sonar:
+          docker:
             timeout: 0
             resources:
             - docker
@@ -84,5 +83,5 @@ pipelines:
             - script: |
                 docker build -t questionnaire-service .
                 docker login -u adalid21 -p ${DOCKER_PASS}
-                docker tag questionnaire-service adalid21/questionnaire_service:1.2
-                docker push adalid21/questionnaire_service:1.2
+                docker tag questionnaire-service adalid21/questionnaire_service:${GIT_COMMIT_HASH}
+                docker push adalid21/questionnaire_service:${GIT_COMMIT_HASH}
