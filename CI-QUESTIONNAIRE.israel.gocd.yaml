@@ -92,4 +92,4 @@ pipelines:
                 docker build -t at20_questionnaire_service .
                 docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
                 docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
-                docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}'
+                docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}
