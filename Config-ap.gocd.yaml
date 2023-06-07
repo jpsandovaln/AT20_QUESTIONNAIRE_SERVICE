@@ -42,6 +42,8 @@ pipelines:
             - build:
                 source: tests/test-results/
                 destination: html_report
+            - build:
+                source: docker-compose-ap.yaml 
           code-coverage:
             timeout: 0
             tasks:
@@ -66,7 +68,7 @@ pipelines:
             - script: |
                 /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner  -Dsonar.organization=at-20-questionnaire-ap  -Dsonar.projectKey=Adalid_AT20_QUESTIONNAIRE_SERVICE  -Dsonar.sources=.  -Dsonar.host.url=https://sonarcloud.io
     - PackageAndPublish:
-        fetch_materials: true
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
@@ -78,6 +80,12 @@ pipelines:
             resources:
             - docker
             tasks:
+            - fetch:
+                is_file: true
+                source: docker-compose-ap.yaml
+                stage: Test
+                job: unit-test
+                run_if: passed
             - script: |
                 docker build -t questionnaire-service .
                 docker login -u adalid21 -p ${DOCKER_PASS}
@@ -87,4 +95,40 @@ pipelines:
             - build:
                 source: docker-compose-ap.yaml
 
-        
+Acceptance:
+    group: AT20Group
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
+    materials:
+      Config-ap:
+        pipeline: Config-ap
+        stage: PackageAndPublish
+    stages:
+    - DeployToDev:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          deployToDev:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - fetch:
+                pipeline: Config-ap
+                stage: PackageAndPublish
+                job: docker
+                source: docker-compose-ap.yaml
+                is_file: true
+                run_if: passed
+            - script: |
+                echo deploy here
+                ls -la
+		            export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-ap.yaml up -d
+                      
