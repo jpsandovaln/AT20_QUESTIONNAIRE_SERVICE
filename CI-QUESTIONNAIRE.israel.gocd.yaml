@@ -11,8 +11,8 @@ pipelines:
       PROJECT_KEY: devops-questionary_devops
       USER_DOCKER: dkmar11
     secure_variables:
-      SONAR_TOKEN: AES:q0vjqL0CjnZTwA7uY4sJtQ==:989O+PBKDQUZ69uwIbEr061xqmbIR64UXnClnEfy4+x2nCjlzVVaYOuWXXzDgtQa
-      DOCKER_PASS: AES:ARQcZ/mzAeIMAjMoUn6EMw==:zQzPJ7eUkCGkQZFqb06R1A==
+      SONAR_TOKEN: AES:5NFg1VoNtth6mvjYH8grPw==:GgXsHUlKJZTHNWUqRbQivhLtqXd+ZwcGvR/5t2d5caY8RtvRaPzhfQ3YYNRRpHPY
+      DOCKER_PASS: AES:n65EVp9nFqRp/7i+onI+/g==:6yD5GTFGcuis6mj3ck03VQ==
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
@@ -31,7 +31,7 @@ pipelines:
           unitest:
             timeout: 0
             resource: 
-            - gocd_agent_node
+            - node
             tasks:
             - script: |
                 npm install
@@ -54,7 +54,7 @@ pipelines:
           Sonar_scaner:
             timeout: 15
             resource: 
-            - gocd_agent_node
+            - node
             tasks:
             - fetch:
                 is_file: false
@@ -79,7 +79,7 @@ pipelines:
           docker:
             timeout: 0
             resources:
-            - gocd_agent_docker
+            - docker
             tasks:
             - fetch:
                 is_file: false
