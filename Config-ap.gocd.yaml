@@ -130,4 +130,3 @@ Acceptance:
             - script: |
                 echo deploy here
                 export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-ap.yaml up -d
-                      
