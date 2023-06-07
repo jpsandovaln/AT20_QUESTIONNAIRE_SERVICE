@@ -5,12 +5,20 @@ pipelines:
     label_template: ${COUNT}
     lock_behavior: none
     display_order: -1
+    environment_variables:
+      TAG_VERSION: 1.2
+      ORG_KEY: devops-questionary
+      PROJECT_KEY: devops-questionary_devops
+      USER_DOCKER: dkmar11
+    secure_variables:
+      SONAR_TOKEN: AES:5NFg1VoNtth6mvjYH8grPw==:GgXsHUlKJZTHNWUqRbQivhLtqXd+ZwcGvR/5t2d5caY8RtvRaPzhfQ3YYNRRpHPY
+      DOCKER_PASS: AES:n65EVp9nFqRp/7i+onI+/g==:6yD5GTFGcuis6mj3ck03VQ==
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         shallow_clone: false
         auto_update: true
-        branch: task-10-israel
+        branch: task-11-israel
     stages:
     - test:
         fetch_materials: true
@@ -22,7 +30,8 @@ pipelines:
         jobs:
           unitest:
             timeout: 0
-            resource: ubuntu
+            resource: 
+            - node
             tasks:
             - script: |
                 npm install
@@ -34,35 +43,53 @@ pipelines:
             - build:
                 source: tests/test-results/
                 destination: html_report
-    - Quality_Gate:
-        fetch_materials: true
+    - Code_inspection:
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
           type: success
           allow_only_on_success: false
         jobs:
-          Wait_Quality_Gate:
+          Sonar_scaner:
             timeout: 15
+            resource: 
+            - node
             tasks:
-            - exec:
-                arguments:
-                - waiting sonar scan
-                command: echo
+            - fetch:
+                is_file: false
+                source: ./
+                stage: test
+                job: unitest
                 run_if: passed
-    - Package:
-        fetch_materials: true
+            - script: |
+                /godata/.sonar/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner \
+                      -Dsonar.organization=${ORG_KEY} \
+                      -Dsonar.projectKey=${PROJECT_KEY} \
+                      -Dsonar.sources=. \
+                      -Dsonar.host.url=https://sonarcloud.io
+    - PackageAndPublish:
+        fetch_materials: false
         keep_artifacts: false
         clean_workspace: false
         approval:
           type: success
           allow_only_on_success: false
         jobs:
-          docker_build:
+          docker:
             timeout: 0
+            resources:
+            - docker
             tasks:
-            - exec:
-                arguments:
-                - docker build -t at20_questionnaire_service .
-                command: echo
+            - fetch:
+                is_file: false
+                source: ./
+                stage: test
+                job: unitest
                 run_if: passed
+            - script: |
+                ls -la
+                docker build -t at20_questionnaire_service .
+                docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
+                docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
+                docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}
