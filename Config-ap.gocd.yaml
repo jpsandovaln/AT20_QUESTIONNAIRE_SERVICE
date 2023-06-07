@@ -84,6 +84,7 @@ pipelines:
                 docker tag questionnaire-service adalid21/questionnaire_service:${GIT_COMMIT_HASH}
                 docker push adalid21/questionnaire_service:${GIT_COMMIT_HASH}
             artifacts:
-              source: docker-compose-ap.yaml
+            - build:
+                source: docker-compose-ap.yaml
 
         
