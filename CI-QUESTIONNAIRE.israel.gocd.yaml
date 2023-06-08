@@ -18,7 +18,7 @@ pipelines:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
         shallow_clone: false
         auto_update: true
-        branch: task-11-israel
+        branch: task-12-israel
     stages:
     - test:
         fetch_materials: true
@@ -93,3 +93,54 @@ pipelines:
                 docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
                 docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
                 docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}
+
+  Acceptance:
+    group: AT20-israel
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    environment_variables:
+      GIT_COMMIT_HASH: 1.2
+    materials:
+      CI-QUESTIONNAIRE:
+        pipeline: CI-QUESTIONNAIRE
+        stage: PackageAndPublish
+    stages:
+    - DeployToDev:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          deployToDev:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - fetch:
+                pipeline: CI-QUESTIONNAIRE
+                stage: PackageAndPublish
+                job: docker
+                source: docker-compose-ap.yaml
+                is_file: true
+                run_if: passed
+            - script: |
+                echo deploy here
+                export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-israel.yaml up -d 
+    - Smoke:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            resources:
+            - docker
+            tasks:
+            - script: |
+                echo command to run smoke test
