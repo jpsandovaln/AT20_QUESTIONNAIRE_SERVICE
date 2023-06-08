@@ -93,6 +93,9 @@ pipelines:
                 docker login -u ${USER_DOCKER} -p ${DOCKER_PASS}
                 docker tag at20_questionnaire_service ${USER_DOCKER}/questionnaire:${TAG_VERSION}
                 docker push ${USER_DOCKER}/questionnaire:${TAG_VERSION}
+            artifacts:
+            - build:
+                source: docker-compose-israel.yaml
 
   Acceptance:
     group: AT20-israel
