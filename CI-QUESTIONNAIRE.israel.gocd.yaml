@@ -30,7 +30,7 @@ pipelines:
         jobs:
           unitest:
             timeout: 0
-            resource: 
+            resources: 
             - node
             tasks:
             - script: |
@@ -53,7 +53,7 @@ pipelines:
         jobs:
           Sonar_scaner:
             timeout: 15
-            resource: 
+            resources: 
             - node
             tasks:
             - fetch:
@@ -127,6 +127,7 @@ pipelines:
                 is_file: true
                 run_if: passed
             - script: |
+                ls -la
                 echo deploy here
                 export TAG_VERSION=${GIT_COMMIT_HASH} && docker-compose -f docker-compose-israel.yaml up -d 
     - Smoke:
