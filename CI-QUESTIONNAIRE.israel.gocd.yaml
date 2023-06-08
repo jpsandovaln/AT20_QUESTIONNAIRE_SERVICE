@@ -11,8 +11,8 @@ pipelines:
       PROJECT_KEY: devops-questionary_devops
       USER_DOCKER: dkmar11
     secure_variables:
-      SONAR_TOKEN: AES:5NFg1VoNtth6mvjYH8grPw==:GgXsHUlKJZTHNWUqRbQivhLtqXd+ZwcGvR/5t2d5caY8RtvRaPzhfQ3YYNRRpHPY
-      DOCKER_PASS: AES:n65EVp9nFqRp/7i+onI+/g==:6yD5GTFGcuis6mj3ck03VQ==
+      SONAR_TOKEN: AES:iEh8xxSMDSY46Ub4zSUBxw==:TeKUngHXaGYQZo4TAcgbEzrXkGHEilZO9YXIx3OeyMfwaAHDpM7GGc4AF4uUokPy
+      DOCKER_PASS: AES:veKIrQ8LQ+niy1fghP66jA==:ZISLmJSx20oR/mA6qWS6JA==
     materials:
       git-1def632:
         git: https://github.com/AT20-DevOps/AT20_QUESTIONNAIRE_SERVICE.git
@@ -123,7 +123,7 @@ pipelines:
                 pipeline: CI-QUESTIONNAIRE
                 stage: PackageAndPublish
                 job: docker
-                source: docker-compose-ap.yaml
+                source: docker-compose-israel.yaml
                 is_file: true
                 run_if: passed
             - script: |
