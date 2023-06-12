@@ -64,7 +64,9 @@ pipeline {
         }
         stage('DeployToDev'){
             steps{
-                sh 'export TAG_VERSION=${TAG_VERSION} && docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'ls -la'
+                sh 'cat docker-compose-israel.yaml'
+                sh 'echo export TAG_VERSION=${TAG_VERSION} && docker-compose -f docker-compose-israel.yaml up -d'
                 sh 'echo command to run smoke test'
             }
         }
