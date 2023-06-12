@@ -66,14 +66,14 @@ pipeline {
             steps{
                 sh 'ls -la'
                 sh 'cat docker-compose-israel.yaml'
-                sh 'echo export TAG_VERSION=${TAG_VERSION} && echo $TAG_VERSION'
+                sh 'export TAG_VERSION=${TAG_VERSION} && echo docker-compose -f docker-compose-israel.yaml up -d'
                 sh 'echo command to run smoke test'
             }
         }
 
         stage('DeployToAuto'){
             steps{
-                sh 'DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'export TAG_VERSION=${TAG_VERSION} && DOCKER_HOST=ssh://$TARGET_HOST docker-compose -f docker-compose-israel.yaml up -d'
                 sh 'echo command to run automation test'
             }
         }
