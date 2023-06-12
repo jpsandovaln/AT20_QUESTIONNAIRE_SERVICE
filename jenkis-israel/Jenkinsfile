@@ -5,7 +5,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonar_token')
         ORG_KEY = 'devops-questionary'
         PROJECT_KEY = 'devops-questionary_devops'
-        TARGET_HOST = '192.168.56.61'
+        TARGET_HOST = '192.168.100.138'
         TAG_VERSION = sh (script: "git rev-parse --short HEAD", returnStdout: true)
     }
     stages{
