@@ -66,7 +66,7 @@ pipeline {
             steps{
                 sh 'ls -la'
                 sh 'cat docker-compose-israel.yaml'
-                sh 'echo export TAG_VERSION=${TAG_VERSION} && docker-compose -f docker-compose-israel.yaml up -d'
+                sh 'echo export TAG_VERSION=${TAG_VERSION} && echo $TAG_VERSION'
                 sh 'echo command to run smoke test'
             }
         }
